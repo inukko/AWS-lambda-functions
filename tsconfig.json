@@ -4,12 +4,8 @@
     "moduleResolution": "node",
     "target": "es5",
     "declaration": false,
-    "lib": [
-      "es2017"
-    ],
-    "types": [
-      "node"
-    ],
+    "lib": ["es2017"],
+    "types": ["node"],
     "noImplicitAny": true,
     "strictNullChecks": true,
     "noFallthroughCasesInSwitch": true,
@@ -21,6 +17,7 @@
     "sourceMap": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "traceResolution": false,
     "listFiles": false,
@@ -30,7 +27,5 @@
     "pretty": true,
     "noEmitOnError": true
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }
