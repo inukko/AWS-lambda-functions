@@ -12,22 +12,22 @@ provider:
   # environment:
   #   MyGlobalEnv: MyGlobalEnvValue
   # # Additional IAM Permissions
-  # iamRoleStatements:
-  # - Effect: Allow
-  #   Action:
-  #   - ec2:DescribeInstances
-  #   Resource: "*"
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:*
+      Resource: "*"
 plugins:
   - serverless-webpack
   - serverless-offline
 custom:
   webpackIncludeModules: true
 functions:
-  diceRoll:
-    handler: handlers/diceRoll.default
+  postHook:
+    handler: src/handlers/postHook.default
     events:
       - http:
-          path: diceRoll
+          path: postHook
           method: get
     # # Function specific environment variables
     # environment:
