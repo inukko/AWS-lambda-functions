@@ -25,7 +25,7 @@ const fetchLiverItems = async (): Promise<any> => {
         data
       };
     }
-    return "動画情報の取得に失敗しました(´；ω；｀)";
+    return { data: { events: [] } };
   } catch (error) {
     console.log(error);
   }
@@ -36,6 +36,18 @@ const getLiverItems = async () => {
     console.log(error)
   );
   const { events } = result.data;
+
+  if (events.length === 0) {
+    return [
+      {
+        avatar_url:
+          "https://pbs.twimg.com/profile_images/1085191620138479618/wwB-jlfk_400x400.jpg",
+        username: "🌈 にじさんじ",
+        content: "動画の取得に失敗しました(´；ω；｀)"
+      }
+    ];
+  }
+
   const now = moment();
 
   /**
@@ -51,6 +63,18 @@ const getLiverItems = async () => {
 
 const makePostParams = async () => {
   const webHookItems = await getLiverItems();
+
+  if (webHookItems.length === 0) {
+    return [
+      {
+        avatar_url:
+          "https://pbs.twimg.com/profile_images/1085191620138479618/wwB-jlfk_400x400.jpg",
+        username: "🌈 にじさんじ",
+        content: "1時間以内に配信予定の動画がありません(´；ω；｀)"
+      }
+    ];
+  }
+
   const postParams = webHookItems.map((item: any) => {
     const { livers, start_date } = item;
     const liveTime = moment(start_date).format("MM月DD日  HH時mm分");
@@ -81,10 +105,6 @@ const makePostParams = async () => {
 
 const postWebHook = async (): Promise<void> => {
   const postParams = await makePostParams();
-  if (postParams.length === 0) {
-    console.log("1時間以内に配信予定の動画がありません(´；ω；｀)");
-    return;
-  }
 
   if ($WEBHOOK_URL === null) {
     return console.error("Webhook URLもしくはEndpoint URLが間違っています");
