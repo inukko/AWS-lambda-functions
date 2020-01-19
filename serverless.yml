@@ -1,0 +1,32 @@
+service: my-service
+provider:
+  name: aws
+  runtime: nodejs
+  region: ${env:AWS_REGION}
+  memorySize: 128
+  # # Stage name
+  # stage: staging
+  # # Global environment variables
+  # environment:
+  #   MyGlobalEnv: MyGlobalEnvValue
+  # # Additional IAM Permissions
+  # iamRoleStatements:
+  # - Effect: Allow
+  #   Action:
+  #   - ec2:DescribeInstances
+  #   Resource: "*"
+plugins:
+  - serverless-webpack
+  - serverless-offline
+custom:
+  webpackIncludeModules: true
+functions:
+  diceRoll:
+    handler: handlers/diceRoll.default
+    events:
+      - http:
+          path: diceRoll
+          method: get
+    # # Function specific environment variables
+    # environment:
+    #   MyPerFunctionEnv: foo
