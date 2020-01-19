@@ -62,7 +62,7 @@ const makePostParams = async () => {
     return {
       avatar_url: avatar,
       username: `🌈 ${name}`,
-      content: `${liveTime}〜 ライブ開始\r`,
+      content: `${liveTime}〜 ライブ開始`,
       embeds: [
         {
           thumbnail: {
