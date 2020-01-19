@@ -1,8 +1,10 @@
+org: inukko
+app: myapp
 service: my-service
 provider:
   name: aws
-  runtime: nodejs
-  region: ${env:AWS_REGION}
+  runtime: nodejs12.x
+  region: ap-northeast-1
   memorySize: 128
   # # Stage name
   # stage: staging
