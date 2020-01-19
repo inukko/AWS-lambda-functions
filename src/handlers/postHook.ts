@@ -1,23 +1,49 @@
 import "source-map-support/register";
 import dalamb from "dalamb";
 import { APIGatewayEvent } from "aws-lambda";
-import { getObject } from "../lib/aws";
-import { S3 } from "aws-sdk";
+// import { getObject } from "../lib/aws";
+// import { S3 } from "aws-sdk";
 import moment from "moment";
 import axios from "axios";
 
-const { WEBHOOK_URL, BUCKET_NAME, KEY_NAME } = process.env;
+const {
+  WEBHOOK_URL,
+  ENDPOINT_URL
+  /* TODO: S3に格納したAPIから取得する */
+  // BUCKET_NAME,
+  // KEY_NAME
+} = process.env;
 
 const $WEBHOOK_URL = WEBHOOK_URL ? WEBHOOK_URL : null;
+const $ENDPOINT_URL = ENDPOINT_URL ? ENDPOINT_URL : null;
 
-const getObjectParams: S3.Types.GetObjectRequest = {
-  Bucket: BUCKET_NAME ? BUCKET_NAME : "",
-  Key: KEY_NAME ? KEY_NAME : ""
-};
+/* TODO: S3に格納したAPIから取得する */
+// const getObjectParams: S3.Types.GetObjectRequest = {
+//   Bucket: BUCKET_NAME ? BUCKET_NAME : "",
+//   Key: KEY_NAME ? KEY_NAME : ""
+// };
+
+const now = moment();
 
 const fetchLiverItems = async (): Promise<any> => {
+  if ($ENDPOINT_URL === null) {
+    return [
+      {
+        avatar_url:
+          "https://pbs.twimg.com/profile_images/1085191620138479618/wwB-jlfk_400x400.jpg",
+        username: "🌈 にじさんじ",
+        content: "動画の取得に失敗しました(´；ω；｀)"
+      }
+    ];
+  }
+
   try {
-    const { data, status } = await getObject(getObjectParams);
+    /* TODO: S3に格納したAPIから取得する */
+    // const { data, status } = await getObject(getObjectParams);
+    const { data, status } = await axios($ENDPOINT_URL)
+      .then(response => response.data)
+      .catch(error => console.error(error));
+
     if (status == "ok") {
       console.log("ok");
       return {
@@ -47,8 +73,6 @@ const getLiverItems = async () => {
       }
     ];
   }
-
-  const now = moment();
 
   /**
    * 一時間以内のライブを抽出
@@ -99,6 +123,14 @@ const makePostParams = async () => {
       ]
     };
   });
+
+  /* TODO: 時間毎のアナウンスを追加する */
+  // const firstContent = {
+  //   avatar_url:
+  //     "https://pbs.twimg.com/profile_images/1071956107172634624/jzM7CFQ7_400x400.jpg",
+  //   username: "Youtube Bot",
+  //   content: `▼${now.format("HH時")}に配信予定の動画です`
+  // };
 
   return postParams;
 };
