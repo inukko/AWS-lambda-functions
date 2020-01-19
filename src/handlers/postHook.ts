@@ -1,7 +1,7 @@
 import "source-map-support/register";
 import dalamb from "dalamb";
 import { APIGatewayEvent } from "aws-lambda";
-import { getObject } from "./lib/aws";
+import { getObject } from "../lib/aws";
 import { S3 } from "aws-sdk";
 import moment from "moment";
 import axios from "axios";
