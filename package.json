@@ -3,9 +3,7 @@
   "name": "serverless-ts-boilerplate",
   "version": "0.1.0",
   "description": "",
-  "scripts": {
-    "build": "webpack"
-  },
+  "scripts": {},
   "repository": {},
   "keywords": [
     "lambda"
