@@ -53,13 +53,26 @@ const makePostParams = async () => {
   const webHookItems = await getLiverItems();
   const postParams = webHookItems.map((item: any) => {
     const { livers, start_date } = item;
-    const liveTime = moment(start_date).format("MM/DD  HH時mm分");
-    const { name, avatar } = livers[0];
+    const liveTime = moment(start_date).format("MM月DD日  HH時mm分");
+    const { name, avatar, color } = livers[0];
+
+    const noPrefixHex: string = color.length === 7 ? color.slice(1) : "FFFFFF";
+    const decimal: number = parseInt(noPrefixHex, 16);
 
     return {
       avatar_url: avatar,
       username: `🌈 ${name}`,
-      content: `${liveTime}〜 ライブ開始\r${item.url}`
+      content: `${liveTime}〜 ライブ開始\r`,
+      embeds: [
+        {
+          thumbnail: {
+            url: item.thumbnail
+          },
+          title: item.name,
+          url: item.url,
+          color: decimal
+        }
+      ]
     };
   });
 
