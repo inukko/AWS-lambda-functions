@@ -1,27 +1,14 @@
 import "source-map-support/register";
 import dalamb from "dalamb";
 import { APIGatewayEvent } from "aws-lambda";
-// import { getObject } from "../lib/aws";
-// import { S3 } from "aws-sdk";
+
 import moment from "moment";
 import axios from "axios";
 
-const {
-  WEBHOOK_URL,
-  ENDPOINT_URL
-  /* TODO: S3に格納したAPIから取得する */
-  // BUCKET_NAME,
-  // KEY_NAME
-} = process.env;
+const { WEBHOOK_URL, ENDPOINT_URL } = process.env;
 
 const $WEBHOOK_URL = WEBHOOK_URL ? WEBHOOK_URL : null;
 const $ENDPOINT_URL = ENDPOINT_URL ? ENDPOINT_URL : null;
-
-/* TODO: S3に格納したAPIから取得する */
-// const getObjectParams: S3.Types.GetObjectRequest = {
-//   Bucket: BUCKET_NAME ? BUCKET_NAME : "",
-//   Key: KEY_NAME ? KEY_NAME : ""
-// };
 
 const now = moment();
 
@@ -38,8 +25,6 @@ const fetchLiverItems = async (): Promise<any> => {
   }
 
   try {
-    /* TODO: S3に格納したAPIから取得する */
-    // const { data, status } = await getObject(getObjectParams);
     const { data, status } = await axios($ENDPOINT_URL)
       .then(response => response.data)
       .catch(error => console.error(error));

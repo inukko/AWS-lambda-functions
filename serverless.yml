@@ -1,6 +1,6 @@
 org: inukko
 app: myapp
-service: my-service
+service: service
 provider:
   name: aws
   runtime: nodejs12.x
@@ -12,11 +12,11 @@ provider:
   # environment:
   #   MyGlobalEnv: MyGlobalEnvValue
   # # Additional IAM Permissions
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - s3:*
-      Resource: "*"
+  # iamRoleStatements:
+  #   - Effect: Allow
+  #     Action:
+  #       - s3:*
+  #     Resource: "*"
 plugins:
   - serverless-webpack
   - serverless-offline
