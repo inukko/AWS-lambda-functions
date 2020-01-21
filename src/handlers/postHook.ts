@@ -1,7 +1,7 @@
 import "source-map-support/register";
 import dalamb from "dalamb";
 import { APIGatewayEvent } from "aws-lambda";
-import { postWebHook } from "../webhook";
+import { postWebHook } from "../hook";
 
 export default dalamb<APIGatewayEvent>(async event => {
   console.log(event);
